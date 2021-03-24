@@ -55,6 +55,3 @@ funcionarios_21 <- funcionarios_21 %>%
     select(apellido_paterno, apellido_materno, nombre, cargo, 
            sueldo_tabular_bruto) %>% 
     arrange(apellido_paterno)
-
-
-
