@@ -6,6 +6,9 @@ library(rvest)
 library(tidyverse)
 library(openxlsx)
 library(janitor)
+library(readxl)
+library(pdftools)
+library(tabulizer)
 
 # Data Import ====
 
@@ -41,11 +44,15 @@ url_xlsx_21 <- read.xlsx(xlsxFile = "https://datos.cdmx.gob.mx/dataset/52f97506-
 
 funcionarios_2021 <- as.data.frame(url_xlsx_21)
 
-View(funcionarios_2021)
-
 ## Beneficiarios
 
+raw_sd_2019 <- read_excel("Padrones/Padron2019/SD_2019.xlsx")
+
+raw_pa_2019 <- pdf_data("Padrones/Padron2019/PA_2019.pdf")
+
 # Data Wrangling ====
+
+## Funcionarios
 
 funcionarios_21 <- funcionarios_2021 %>% clean_names() 
 
@@ -55,3 +62,19 @@ funcionarios_21 <- funcionarios_21 %>%
     select(apellido_paterno, apellido_materno, nombre, cargo, 
            sueldo_tabular_bruto) %>% 
     arrange(apellido_paterno)
+
+View(funcionarios_21)
+
+## Beneficiarios
+
+raw_sd_2019 <- raw_sd_2019[-c(1:11, 54899), ]
+colnames(raw_sd_2019) <- c("consecutivo", "apellido_paterno", "apellido_materno",
+                           "nombre", "unidad", "delegacion", "sexo", "edad", 
+                           "monto")
+sd_2019 <- raw_sd_2019 %>% 
+    select(apellido_paterno, apellido_materno, nombre, sexo, edad, monto) %>% 
+    arrange(apellido_paterno)
+
+
+
+
