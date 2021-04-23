@@ -1,41 +1,14 @@
 
 # Libraries ====
 
+library(tidyverse)
 library(xml2)
 library(rvest)
-library(tidyverse)
 library(openxlsx)
 library(janitor)
 library(readxl)
-library(pdftools)
-library(tabulizer)
 
 # Data Import ====
-
-## Funcionarios (loop)
-
-url_tudinero <- "https://tudinero.cdmx.gob.mx/buscador_personas"
-
-base_webpage <- read_html(url_tudinero)
-
-new_urls <- "https://tudinero.cdmx.gob.mx/buscador_personas/%s"
-
-table_base <- html_table(base_webpage)[[1]] %>% 
-    as_tibble(.name_repair = "unique")
-
-table_new <- data.frame()
-df <- data.frame()    
-
-i <- 30
-while (i < 251788) {
-    new_webpage <- read_html(sprintf(new_urls, i))
-    table_new <- html_table(new_webpage)[[1]] %>% 
-        as_tibble(.name_repair = "unique")
-    df <- rbind(df, table_new)
-    i = i + 30
-}
-
-funcionarios <- merge(table_base, df, all = TRUE)
 
 ## Funcionarios (xlsx)
 
@@ -47,8 +20,14 @@ funcionarios_2021 <- as.data.frame(url_xlsx_21)
 ## Beneficiarios
 
 raw_sd_2019 <- read_excel("Padrones/Padron2019/SD_2019.xlsx")
+raw_sd_2017 <- read_excel("Padrones/Padron2017/SD_2017.xlsx")
+raw_sd_2016 <- read_excel("Padrones/Padron2016/SD_2016.xlsx")
 
-raw_pa_2019 <- pdf_data("Padrones/Padron2019/PA_2019.pdf")
+raw_pa_2018 <- read_excel("Padrones/Padron2018/PA_2018.xlsx")
+
+raw_pa_2016 <- read_excel("Padrones/Padron2016/PA_2016.xlsx")
+raw_pa_2015 <- read_excel("Padrones/Padron2015/PA_2015.xlsx")
+
 
 # Data Wrangling ====
 
@@ -67,14 +46,56 @@ View(funcionarios_21)
 
 ## Beneficiarios
 
+benef_con_monto <- function(data) {
+    data %>% 
+        select(apellido_paterno, apellido_materno, nombre, sexo, edad, monto) %>% 
+        arrange(apellido_paterno)
+}
+
+benef_sin_monto <- function(data) {
+    data %>% 
+        select(apellido_paterno, apellido_materno, nombre, sexo, edad) %>% 
+        arrange(apellido_paterno)
+}
+
+## SD
+
 raw_sd_2019 <- raw_sd_2019[-c(1:11, 54899), ]
 colnames(raw_sd_2019) <- c("consecutivo", "apellido_paterno", "apellido_materno",
                            "nombre", "unidad", "delegacion", "sexo", "edad", 
                            "monto")
-sd_2019 <- raw_sd_2019 %>% 
-    select(apellido_paterno, apellido_materno, nombre, sexo, edad, monto) %>% 
-    arrange(apellido_paterno)
+sd_2019 <- benef_con_monto(raw_sd_2019)
 
+raw_sd_2017 <- raw_sd_2017[-c(1:14), ]
+colnames(raw_sd_2017) <- c("consecutivo", "apellido_paterno", "apellido_materno",
+                           "nombre", "unidad", "delegacion", "sexo", "edad", 
+                           "monto")
+sd_2017 <- benef_con_monto(raw_sd_2017)
+
+raw_sd_2016 <- raw_sd_2016[-c(1:50), ]
+colnames(raw_sd_2016) <- c("consecutivo", "apellido_paterno", "apellido_materno",
+                           "nombre", "unidad", "delegacion", "sexo", "edad")
+sd_2016 <- benef_sin_monto(sd_2016)
+
+## PA
+
+raw_pa_2018 <- raw_pa_2018[-c(1:685), ]
+colnames(raw_pa_2018) <- c("consecutivo", "apellido_paterno", "apellido_materno",
+                           "nombre", "unidad", "delegacion", "sexo", "edad", 
+                           "monto")
+pa_2018 <- benef_con_monto(raw_pa_2018)
+pa_2018 <- pa_2018[-1, ]
+
+raw_pa_2016 <- raw_pa_2016[-c(1:595), ]
+colnames(raw_pa_2016) <- c("consecutivo", "apellido_paterno", "apellido_materno",
+                           "nombre", "unidad", "delegacion", "sexo", "edad")
+pa_2016 <- benef_sin_monto(raw_pa_2016)
+
+raw_pa_2015 <- raw_pa_2015[-c(1:15), ]
+colnames(raw_pa_2015) <- c("consecutivo", "apellido_paterno", "apellido_materno",
+                           "nombre", "unidad", "delegacion", "sexo", "edad")
+pa_2015 <- benef_sin_monto(raw_pa_2015)
+pa_2015 <- pa_2015[-c(1:305), ]
 
 
 
