@@ -20,9 +20,10 @@ funcionarios_2021 <- as.data.frame(url_xlsx_21)
 ## Beneficiarios
 
 raw_sd_2019 <- read_excel("Padrones/Padron2019/SD_2019.xlsx")
-raw_sd_2018 <- read_excel("Padrones/Padron2018/SD_2018.xlsx") # sólo lee la primera página
+raw_sd_2018 <- read_excel("Padrones/Padron2018/SD_2018_3.0.xlsx") # sólo lee la primera página (cuando es la version 1)
 raw_sd_2017 <- read_excel("Padrones/Padron2017/SD_2017.xlsx")
 raw_sd_2016 <- read_excel("Padrones/Padron2016/SD_2016.xlsx")
+raw_sd_2015 <- read_excel("Padrones/Padron2015/SD_2015.xlsx")
 
 raw_pa_2018 <- read_excel("Padrones/Padron2018/PA_2018.xlsx")
 raw_pa_2017 <- read_excel("Padrones/Padron2017/PA_2017.xlsx")
@@ -67,6 +68,12 @@ colnames(raw_sd_2019) <- c("consecutivo", "apellido_paterno", "apellido_materno"
                            "monto")
 sd_2019 <- benef_con_monto(raw_sd_2019)
 
+raw_sd_2018 <- raw_sd_2018[-c(1:5), ]
+colnames(raw_sd_2018) <- c("consecutivo", "apellido_paterno", "apellido_materno",
+                           "nombre", "unidad", "delegacion", "sexo", "edad", 
+                           "monto")
+sd_2018 <- benef_con_monto(raw_sd_2018) # mal acomodados (version 3)
+
 raw_sd_2017 <- raw_sd_2017[-c(1:14), ]
 colnames(raw_sd_2017) <- c("consecutivo", "apellido_paterno", "apellido_materno",
                            "nombre", "unidad", "delegacion", "sexo", "edad", 
@@ -77,6 +84,10 @@ raw_sd_2016 <- raw_sd_2016[-c(1:50), ]
 colnames(raw_sd_2016) <- c("consecutivo", "apellido_paterno", "apellido_materno",
                            "nombre", "unidad", "delegacion", "sexo", "edad")
 sd_2016 <- benef_sin_monto(raw_sd_2016)
+
+colnames(raw_sd_2015) <- c("consecutivo", "apellido_paterno", "apellido_materno",
+                           "nombre", "unidad", "delegacion", "sexo", "edad")
+sd_2015 <- benef_sin_monto(raw_sd_2015)
 
 ## PA
 
@@ -104,6 +115,12 @@ colnames(raw_pa_2015) <- c("consecutivo", "apellido_paterno", "apellido_materno"
                            "nombre", "unidad", "delegacion", "sexo", "edad")
 pa_2015 <- benef_sin_monto(raw_pa_2015)
 pa_2015 <- pa_2015[-c(1:305), ]
+
+
+
+
+
+
 
 
 
