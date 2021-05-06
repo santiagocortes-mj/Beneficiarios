@@ -41,9 +41,9 @@ raw_pa_2019_6 <- read_excel("Padrones/Padron2019/XLSX/PA_2019_6.xlsx")
 raw_pa_2019_7 <- read_excel("Padrones/Padron2019/XLSX/PA_2019_7.xlsx") 
 raw_pa_2019_8 <- read_excel("Padrones/Padron2019/XLSX/PA_2019_8.xlsx")
 
-# Data Wrangling ====
+# Data Wrangling
 
-## Funcionarios
+## Wrangling Funcionarios ====
 
 funcionarios_21 <- funcionarios_2021 %>% clean_names() 
 
@@ -56,7 +56,7 @@ funcionarios_21 <- funcionarios_21 %>%
 
 View(funcionarios_21)
 
-## Beneficiarios
+## Wrangling Beneficiarios ====
 
 benef_con_monto <- function(data) {
     data %>% 
