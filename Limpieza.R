@@ -24,6 +24,7 @@ raw_sd_2018 <- read_excel("Padrones/Padron2018/SD_2018_3.0.xlsx") # sólo lee la
 raw_sd_2017 <- read_excel("Padrones/Padron2017/SD_2017.xlsx")
 raw_sd_2016 <- read_excel("Padrones/Padron2016/SD_2016.xlsx")
 raw_sd_2015 <- read_excel("Padrones/Padron2015/SD_2015.xlsx")
+raw_sd_2014 <- read_excel("Padrones/Padron2014/SD_2014.xlsx")
 
 raw_pa_2018 <- read_excel("Padrones/Padron2018/PA_2018.xlsx")
 raw_pa_2017 <- read_excel("Padrones/Padron2017/PA_2017.xlsx")
@@ -40,6 +41,25 @@ raw_pa_2019_5 <- read_excel("Padrones/Padron2019/XLSX/PA_2019_5.xlsx")
 raw_pa_2019_6 <- read_excel("Padrones/Padron2019/XLSX/PA_2019_6.xlsx")
 raw_pa_2019_7 <- read_excel("Padrones/Padron2019/XLSX/PA_2019_7.xlsx") 
 raw_pa_2019_8 <- read_excel("Padrones/Padron2019/XLSX/PA_2019_8.xlsx")
+
+### PA 2014
+
+raw_pa_2014_AOB <- read_excel("Padrones/Padron2014/PA/PA_AOB_2014.xlsx")
+raw_pa_2014_AZC <- read_excel("Padrones/Padron2014/PA/PA_AZC_2014.xlsx")
+raw_pa_2014_BJU <- read_excel("Padrones/Padron2014/PA/PA_BJU_2014.xlsx")
+raw_pa_2014_COY <- read_excel("Padrones/Padron2014/PA/PA_COY_2014.xlsx")
+raw_pa_2014_CUH <- read_excel("Padrones/Padron2014/PA/PA_CUH_2014.xlsx")
+raw_pa_2014_CUJ <- read_excel("Padrones/Padron2014/PA/PA_CUJ_2014.xlsx")
+raw_pa_2014_GAM <- read_excel("Padrones/Padron2014/PA/PA_GAM_2014.xlsx")
+raw_pa_2014_IZC <- read_excel("Padrones/Padron2014/PA/PA_IZC_2014.xlsx")
+raw_pa_2014_IZP <- read_excel("Padrones/Padron2014/PA/PA_IZP_2014.xlsx")
+raw_pa_2014_MAC <- read_excel("Padrones/Padron2014/PA/PA_MAC_2014.xlsx")
+raw_pa_2014_MIH <- read_excel("Padrones/Padron2014/PA/PA_MIH_2014.xlsx")
+raw_pa_2014_MIL <- read_excel("Padrones/Padron2014/PA/PA_MIL_2014.xlsx")
+raw_pa_2014_TLH <- read_excel("Padrones/Padron2014/PA/PA_TLH_2014.xlsx")
+raw_pa_2014_TLP <- read_excel("Padrones/Padron2014/PA/PA_TLP_2014.xlsx")
+raw_pa_2014_VCA <- read_excel("Padrones/Padron2014/PA/PA_VCA_2014.xlsx")
+raw_pa_2014_XOC <- read_excel("Padrones/Padron2014/PA/PA_XOC_2014.xlsx")
 
 # Data Wrangling
 
@@ -98,6 +118,10 @@ sd_2016 <- benef_sin_monto(raw_sd_2016)
 colnames(raw_sd_2015) <- c("consecutivo", "apellido_paterno", "apellido_materno",
                            "nombre", "unidad", "delegacion", "sexo", "edad")
 sd_2015 <- benef_sin_monto(raw_sd_2015)
+
+colnames(raw_sd_2014) <- c("consecutivo", "apellido_paterno", "apellido_materno",
+                           "nombre", "unidad", "delegacion", "sexo", "edad")
+sd_2014 <- benef_sin_monto(raw_sd_2014)
 
 ## PA
 
@@ -177,3 +201,102 @@ pa_2019 <- bind_rows(pa_2019, pa_2019_5)
 pa_2019 <- bind_rows(pa_2019, pa_2019_6)
 pa_2019 <- bind_rows(pa_2019, pa_2019_7)
 pa_2019 <- bind_rows(pa_2019, pa_2019_8)
+
+### PA 2014
+
+raw_pa_2014_AOB <- raw_pa_2014_AOB[-c(1:2), ]
+colnames(raw_pa_2014_AOB) <- c("consecutivo", "apellido_paterno", 
+                               "apellido_materno", "nombre", "unidad", 
+                               "delegacion", "sexo", "edad")
+pa_2014_1 <- benef_sin_monto(raw_pa_2014_AOB)
+
+colnames(raw_pa_2014_AZC) <- c("consecutivo", "apellido_paterno", 
+                               "apellido_materno", "nombre", "unidad", 
+                               "delegacion", "sexo", "edad")
+pa_2014_2 <- benef_sin_monto(raw_pa_2014_AZC)
+
+colnames(raw_pa_2014_BJU) <- c("consecutivo", "apellido_paterno", 
+                               "apellido_materno", "nombre", "unidad", 
+                               "delegacion", "sexo", "edad")
+pa_2014_3 <- benef_sin_monto(raw_pa_2014_BJU)
+
+colnames(raw_pa_2014_COY) <- c("consecutivo", "apellido_paterno", 
+                               "apellido_materno", "nombre", "unidad", 
+                               "delegacion", "sexo", "edad")
+pa_2014_4 <- benef_sin_monto(raw_pa_2014_COY)
+
+colnames(raw_pa_2014_CUH) <- c("consecutivo", "apellido_paterno", 
+                               "apellido_materno", "nombre", "unidad", 
+                               "delegacion", "sexo", "edad")
+pa_2014_5 <- benef_sin_monto(raw_pa_2014_CUH)
+
+colnames(raw_pa_2014_CUJ) <- c("consecutivo", "apellido_paterno", 
+                               "apellido_materno", "nombre", "unidad", 
+                               "delegacion", "sexo", "edad")
+pa_2014_6 <- benef_sin_monto(raw_pa_2014_CUJ)
+
+colnames(raw_pa_2014_GAM) <- c("consecutivo", "apellido_paterno", 
+                               "apellido_materno", "nombre", "unidad", 
+                               "delegacion", "sexo", "edad")
+pa_2014_7 <- benef_sin_monto(raw_pa_2014_GAM)
+
+colnames(raw_pa_2014_IZC) <- c("consecutivo", "apellido_paterno", 
+                               "apellido_materno", "nombre", "unidad", 
+                               "delegacion", "sexo", "edad")
+pa_2014_8 <- benef_sin_monto(raw_pa_2014_IZC)
+
+colnames(raw_pa_2014_IZP) <- c("consecutivo", "apellido_paterno", 
+                               "apellido_materno", "nombre", "unidad", 
+                               "delegacion", "sexo", "edad")
+pa_2014_9 <- benef_sin_monto(raw_pa_2014_IZP)
+
+colnames(raw_pa_2014_MAC) <- c("consecutivo", "apellido_paterno", 
+                               "apellido_materno", "nombre", "unidad", 
+                               "delegacion", "sexo", "edad")
+pa_2014_10 <- benef_sin_monto(raw_pa_2014_MAC)
+
+colnames(raw_pa_2014_MIH) <- c("consecutivo", "apellido_paterno", 
+                               "apellido_materno", "nombre", "unidad", 
+                               "delegacion", "sexo", "edad")
+pa_2014_11 <- benef_sin_monto(raw_pa_2014_MIH)
+
+colnames(raw_pa_2014_MIL) <- c("consecutivo", "apellido_paterno", 
+                               "apellido_materno", "nombre", "unidad", 
+                               "delegacion", "sexo", "edad")
+pa_2014_12 <- benef_sin_monto(raw_pa_2014_MIL)
+
+colnames(raw_pa_2014_TLH) <- c("consecutivo", "apellido_paterno", 
+                               "apellido_materno", "nombre", "unidad", 
+                               "delegacion", "sexo", "edad")
+pa_2014_13 <- benef_sin_monto(raw_pa_2014_TLH)
+
+colnames(raw_pa_2014_TLP) <- c("consecutivo", "apellido_paterno", 
+                               "apellido_materno", "nombre", "unidad", 
+                               "delegacion", "sexo", "edad")
+pa_2014_14 <- benef_sin_monto(raw_pa_2014_TLP)
+
+colnames(raw_pa_2014_VCA) <- c("consecutivo", "apellido_paterno", 
+                               "apellido_materno", "nombre", "unidad", 
+                               "delegacion", "sexo", "edad")
+pa_2014_15 <- benef_sin_monto(raw_pa_2014_VCA)
+
+colnames(raw_pa_2014_XOC) <- c("consecutivo", "apellido_paterno", 
+                               "apellido_materno", "nombre", "unidad", 
+                               "delegacion", "sexo", "edad")
+pa_2014_16 <- benef_sin_monto(raw_pa_2014_XOC)
+
+pa_2014 <- bind_rows(pa_2014_1, pa_2014_2)
+pa_2014 <- bind_rows(pa_2014, pa_2014_3)
+pa_2014 <- bind_rows(pa_2014, pa_2014_4)
+pa_2014 <- bind_rows(pa_2014, pa_2014_5)
+pa_2014 <- bind_rows(pa_2014, pa_2014_6)
+pa_2014 <- bind_rows(pa_2014, pa_2014_7)
+pa_2014 <- bind_rows(pa_2014, pa_2014_8)
+pa_2014 <- bind_rows(pa_2014, pa_2014_9)
+pa_2014 <- bind_rows(pa_2014, pa_2014_10)
+pa_2014 <- bind_rows(pa_2014, pa_2014_11)
+pa_2014 <- bind_rows(pa_2014, pa_2014_12)
+pa_2014 <- bind_rows(pa_2014, pa_2014_13)
+pa_2014 <- bind_rows(pa_2014, pa_2014_14)
+pa_2014 <- bind_rows(pa_2014, pa_2014_15)
+pa_2014 <- bind_rows(pa_2014, pa_2014_16)
