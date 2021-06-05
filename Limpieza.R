@@ -311,5 +311,67 @@ pa_2014 <- bind_rows(pa_2014, pa_2014_14)
 pa_2014 <- bind_rows(pa_2014, pa_2014_15)
 pa_2014 <- bind_rows(pa_2014, pa_2014_16)
 
+# Combination ====
+
+name_selection <- function(data) {
+    data <- data %>% select(apellido_paterno, apellido_materno, nombre)
+}
+
+## 2019
+
+sd_2019 <- name_selection(sd_2019)
+pa_2019 <- name_selection(pa_2019)
+
+padron_2019 <- bind_rows(sd_2019, pa_2019, .id = "id") # 1 = SD, 2 = PA
+
+## 2018
+
+sd_2018 <- name_selection(sd_2018)
+pa_2018 <- name_selection(pa_2018)
+
+padron_2018 <- bind_rows(sd_2018, pa_2018, .id = "id")
+
+## 2017
+
+sd_2017 <- name_selection(sd_2017)
+pa_2017 <- name_selection(pa_2017)
+
+padron_2017 <- bind_rows(sd_2017, pa_2017, .id = "id")
+
+## 2016
+
+sd_2016 <- name_selection(sd_2016)
+pa_2016 <- name_selection(pa_2016)
+
+padron_2016 <- bind_rows(sd_2016, pa_2016, .id = "id")
+
+## 2015
+
+sd_2015 <- name_selection(sd_2015)
+pa_2015 <- name_selection(pa_2015)
+
+padron_2015 <- bind_rows(sd_2015, pa_2015, .id = "id")
+
+
+## 2014
+
+sd_2014 <- name_selection(sd_2014)
+pa_2014 <- name_selection(pa_2014)
+
+padron_2014 <- bind_rows(sd_2014, pa_2014, .id = "id")
+
+# CSV ====
+
+write.csv(padron_2014, "Padrones/Padron2014/padron_2014.csv", row.names = FALSE)
+
+write.csv(padron_2015, "Padrones/Padron2015/padron_2015.csv", row.names = FALSE)
+
+write.csv(padron_2016, "Padrones/Padron2016/padron_2016.csv", row.names = FALSE)
+
+write.csv(padron_2017, "Padrones/Padron2017/padron_2017.csv", row.names = FALSE)
+
+write.csv(padron_2018, "Padrones/Padron2018/padron_2018.csv", row.names = FALSE)
+
+write.csv(padron_2019, "Padrones/Padron2019/padron_2019.csv", row.names = FALSE)
 
 
