@@ -41,7 +41,7 @@ raw_sd_2018 <- data.frame()
 
 for (i in 1:length(sheets)) {
     data <- read_excel(path = path_2018, sheet = sheets[[i]])
-    raw_sd_2018 <- bind_rows(raw_sd_2018, data, .id = )
+    raw_sd_2018 <- bind_rows(raw_sd_2018, data)
 }
 
 ### PA 2019 
@@ -74,6 +74,19 @@ raw_pa_2014_TLP <- read_excel("Padrones/Padron2014/PA/PA_TLP_2014.xlsx")
 raw_pa_2014_VCA <- read_excel("Padrones/Padron2014/PA/PA_VCA_2014.xlsx")
 raw_pa_2014_XOC <- read_excel("Padrones/Padron2014/PA/PA_XOC_2014.xlsx")
 
+### PA 2015
+
+path_2015 <- "Padrones/Padron2015/PA_2015.xlsx"
+sheets <- excel_sheets(path_2015)
+sheets <- as.list(sheets)
+
+raw_pa_2015 <- data.frame()
+
+for (i in 1:length(sheets)) {
+    data <- read_excel(path = path_2015, sheet = sheets[[i]])
+    raw_pa_2015 <- bind_rows(raw_pa_2015, data)
+}
+
 # Data Wrangling
 
 ## Wrangling Funcionarios ====
@@ -93,13 +106,15 @@ View(funcionarios_21)
 
 benef_con_monto <- function(data) {
     data %>% 
-        select(apellido_paterno, apellido_materno, nombre, sexo, edad, monto) %>% 
+        select(apellido_paterno, apellido_materno, nombre, 
+               delegacion, sexo, edad, monto) %>% 
         arrange(apellido_paterno)
 }
 
 benef_sin_monto <- function(data) {
     data %>% 
-        select(apellido_paterno, apellido_materno, nombre, sexo, edad) %>% 
+        select(apellido_paterno, apellido_materno, nombre, 
+               delegacion, sexo, edad) %>% 
         arrange(apellido_paterno)
 }
 
@@ -112,26 +127,26 @@ colnames(raw_sd_2019) <- c("consecutivo", "apellido_paterno", "apellido_materno"
 sd_2019 <- benef_con_monto(raw_sd_2019)
 
 sd_2018 <- benef_sin_monto(raw_sd_2018)
-sd_2018 <- sd_2018[-c(1:2), ]
+sd_2018 <- sd_2018[-c(1:2), ] # delegación y edad
 
 raw_sd_2017 <- raw_sd_2017[-c(1:14), ]
 colnames(raw_sd_2017) <- c("consecutivo", "apellido_paterno", "apellido_materno",
                            "nombre", "unidad", "delegacion", "sexo", "edad", 
                            "monto")
-sd_2017 <- benef_con_monto(raw_sd_2017)
+sd_2017 <- benef_con_monto(raw_sd_2017) # montos
 
 raw_sd_2016 <- raw_sd_2016[-c(1:50), ]
 colnames(raw_sd_2016) <- c("consecutivo", "apellido_paterno", "apellido_materno",
                            "nombre", "unidad", "delegacion", "sexo", "edad")
-sd_2016 <- benef_sin_monto(raw_sd_2016)
+sd_2016 <- benef_sin_monto(raw_sd_2016) # edad y sexo
 
 colnames(raw_sd_2015) <- c("consecutivo", "apellido_paterno", "apellido_materno",
                            "nombre", "unidad", "delegacion", "sexo", "edad")
-sd_2015 <- benef_sin_monto(raw_sd_2015)
+sd_2015 <- benef_sin_monto(raw_sd_2015) # delegación
 
 colnames(raw_sd_2014) <- c("consecutivo", "apellido_paterno", "apellido_materno",
                            "nombre", "unidad", "delegacion", "sexo", "edad")
-sd_2014 <- benef_sin_monto(raw_sd_2014)
+sd_2014 <- benef_sin_monto(raw_sd_2014) # sexo
 
 ## PA
 
@@ -140,14 +155,13 @@ colnames(raw_pa_2018) <- c("consecutivo", "apellido_paterno", "apellido_materno"
                            "nombre", "unidad", "delegacion", "sexo", "edad", 
                            "monto")
 pa_2018 <- benef_con_monto(raw_pa_2018)
-pa_2018 <- pa_2018[-1, ]
+pa_2018 <- pa_2018[-1, ] # edad y sexo
 
 raw_pa_2017 <- raw_pa_2017[-c(1:17), ]
 colnames(raw_pa_2017) <- c("consecutivo", "apellido_paterno", "apellido_materno",
                            "nombre", "unidad", "delegacion", "sexo", "edad", 
                            "monto")
-pa_2017 <- benef_con_monto(raw_pa_2017)
-pa_2017 <- pa_2017[-c(1:6414), ]
+pa_2017 <- benef_con_monto(raw_pa_2017) # monto
 
 raw_pa_2016 <- raw_pa_2016[-c(1:595), ]
 colnames(raw_pa_2016) <- c("consecutivo", "apellido_paterno", "apellido_materno",
@@ -158,7 +172,6 @@ raw_pa_2015 <- raw_pa_2015[-c(1:15), ]
 colnames(raw_pa_2015) <- c("consecutivo", "apellido_paterno", "apellido_materno",
                            "nombre", "unidad", "delegacion", "sexo", "edad")
 pa_2015 <- benef_sin_monto(raw_pa_2015)
-pa_2015 <- pa_2015[-c(1:305), ]
 
 ### PA 2019
 
@@ -210,7 +223,7 @@ pa_2019 <- bind_rows(pa_2019, pa_2019_4)
 pa_2019 <- bind_rows(pa_2019, pa_2019_5)
 pa_2019 <- bind_rows(pa_2019, pa_2019_6)
 pa_2019 <- bind_rows(pa_2019, pa_2019_7)
-pa_2019 <- bind_rows(pa_2019, pa_2019_8)
+pa_2019 <- bind_rows(pa_2019, pa_2019_8) # delegación y sexo
 
 ### PA 2014
 
@@ -309,7 +322,7 @@ pa_2014 <- bind_rows(pa_2014, pa_2014_12)
 pa_2014 <- bind_rows(pa_2014, pa_2014_13)
 pa_2014 <- bind_rows(pa_2014, pa_2014_14)
 pa_2014 <- bind_rows(pa_2014, pa_2014_15)
-pa_2014 <- bind_rows(pa_2014, pa_2014_16)
+pa_2014 <- bind_rows(pa_2014, pa_2014_16) # delegación, sexo y edad combinados
 
 # Combination ====
 
